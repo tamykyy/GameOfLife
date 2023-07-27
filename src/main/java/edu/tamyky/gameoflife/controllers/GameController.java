@@ -20,9 +20,7 @@ public class GameController implements Initializable {
     public void clickCell(MouseEvent event) {
         Node clickedNode = event.getPickResult().getIntersectedNode();
         if (clickedNode != world) {
-            int row = GridPane.getRowIndex(clickedNode);
-            int col = GridPane.getColumnIndex(clickedNode);
-            System.out.println(row + " " + col);
+            game.updateCell((Rectangle) clickedNode);
         }
     }
 

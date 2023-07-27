@@ -8,21 +8,24 @@ import javafx.scene.shape.Rectangle;
 public class Game {
 
     private static Game instance;
-    
+
     private boolean[][] worldData;
+
+    private GridPane worldGrid;
 
     private Game() {
     }
 
-    public void init(GridPane world) {
-        int rows = 100;
-        int cols = 100;
+    public void init(GridPane worldGrid) {
+        this.worldGrid = worldGrid;
+        int rows = 10;
+        int cols = 10;
 
         worldData = new boolean[rows][cols];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                world.add(createRectangle(), i, j);
+                worldGrid.add(createRectangle(), i, j);
             }
         }
     }
@@ -33,6 +36,18 @@ public class Game {
         rectangle.setCursor(Cursor.HAND);
         rectangle.setStroke(Color.BLACK);
         return rectangle;
+    }
+
+    public void updateCell(Rectangle cell) {
+        int row = GridPane.getRowIndex(cell);
+        int col = GridPane.getColumnIndex(cell);
+        if (worldData[row][col]) {
+            worldData[row][col] = false;
+            cell.setFill(Color.WHITE);
+        } else {
+            worldData[row][col] = true;
+            cell.setFill(Color.BLACK);
+        }
     }
 
     public static Game getInstance() {

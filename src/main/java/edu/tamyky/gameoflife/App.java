@@ -14,6 +14,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stage.setTitle("Conway's Game of Life");
+        stage.setMinWidth(460);
+        stage.setMinHeight(300);
         showScene(stage, "menu-view.fxml");
     }
 

@@ -9,16 +9,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane prefHeight="421.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.tamyky.gameoflife.controllers.GameController">
-    <children>
-        <StackPane id="root" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-                <GridPane fx:id="world" onMouseClicked="#clickCell">
+<AnchorPane prefHeight="421.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.tamyky.gameoflife.controllers.GameController">
+        <StackPane id="root" focusTraversable="true" onKeyPressed="#onKeyPressed" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <GridPane fx:id="gridPane" onMouseClicked="#cellClicked">
                 </GridPane>
                 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" StackPane.alignment="TOP_LEFT">
                     <top>
                         <HBox BorderPane.alignment="CENTER">
-                            <children>
                                 <Button contentDisplay="CENTER" mnemonicParsing="false" text="STOP" textAlignment="CENTER" textOverrun="CLIP">
                                     <HBox.margin>
                                         <Insets right="10.0" />
@@ -48,7 +45,6 @@
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
-                            </children>
                             <opaqueInsets>
                                 <Insets />
                             </opaqueInsets>
@@ -58,7 +54,5 @@
                         </HBox>
                     </top>
                 </BorderPane>
-            </children>
         </StackPane>
-    </children>
 </AnchorPane>

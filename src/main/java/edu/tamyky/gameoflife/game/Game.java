@@ -5,29 +5,73 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.*;
+
 public class Game {
 
     private static Game instance;
-
-    private boolean[][] worldData;
-
-    private GridPane worldGrid;
+    private Cell[][] world;
 
     private Game() {
     }
 
-    public void init(GridPane worldGrid) {
-        this.worldGrid = worldGrid;
+    public void init(GridPane gridPane) {
         int rows = 10;
         int cols = 10;
 
-        worldData = new boolean[rows][cols];
+        world = new Cell[rows][cols];
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                worldGrid.add(createRectangle(), i, j);
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                Rectangle rectangle = createRectangle();
+                world[row][col] = new Cell(rectangle);
+                gridPane.add(rectangle, col, row);
             }
         }
+    }
+
+    public void updateCell(Rectangle rectangle) {
+        int row = GridPane.getRowIndex(rectangle);
+        int col = GridPane.getColumnIndex(rectangle);
+        updateWorld(world[row][col]);
+    }
+
+    public void doIteration() {
+        List<Cell> cellsToUpdate = new ArrayList<>();
+        for (int row = 0; row < world.length; row++) {
+            for (int col = 0; col < world[row].length; col++) {
+                if (checkNeighbors(row, col))
+                    cellsToUpdate.add(world[row][col]);
+            }
+        }
+        cellsToUpdate.forEach(this::updateWorld);
+    }
+
+    private void updateWorld(Cell cell) {
+        if (cell.isAlive()) {
+            cell.setAlive(false);
+            cell.getRectangle().setFill(Color.WHITE);
+        } else {
+            cell.setAlive(true);
+            cell.getRectangle().setFill(Color.BLACK);
+        }
+    }
+
+    private boolean checkNeighbors(int row, int col) {
+        int liveNeighbors = 0;
+
+        for (int i = row - 1; i <= row + 1; i++) {
+            for (int j = col - 1; j <= col + 1; j++) {
+                if (i == row && j == col) continue;
+
+                try {
+                    if (world[i][j].isAlive())
+                        liveNeighbors++;
+                } catch (IndexOutOfBoundsException ignored) {
+                }
+            }
+        }
+        return Rules.check(world[row][col].isAlive(), liveNeighbors);
     }
 
     private Rectangle createRectangle() {
@@ -36,18 +80,6 @@ public class Game {
         rectangle.setCursor(Cursor.HAND);
         rectangle.setStroke(Color.BLACK);
         return rectangle;
-    }
-
-    public void updateCell(Rectangle cell) {
-        int row = GridPane.getRowIndex(cell);
-        int col = GridPane.getColumnIndex(cell);
-        if (worldData[row][col]) {
-            worldData[row][col] = false;
-            cell.setFill(Color.WHITE);
-        } else {
-            worldData[row][col] = true;
-            cell.setFill(Color.BLACK);
-        }
     }
 
     public static Game getInstance() {

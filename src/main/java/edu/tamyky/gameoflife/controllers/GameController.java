@@ -1,11 +1,12 @@
 package edu.tamyky.gameoflife.controllers;
 
 import edu.tamyky.gameoflife.game.Game;
-import javafx.event.ActionEvent;
+import edu.tamyky.gameoflife.game.GameSize;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -19,6 +20,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class GameController implements Initializable {
+
+    private static GameSize size;
 
     private Game game;
 
@@ -38,7 +41,10 @@ public class GameController implements Initializable {
 
     public void onKeyPressed(KeyEvent event) {
         switch (event.getCode()) {
-            case SPACE -> game.doIteration();
+            case SPACE -> stopButtonClicked();
+            case DIGIT1 -> speed1ButtonClicked();
+            case DIGIT2 -> speed2ButtonClicked();
+            case DIGIT3 -> speed3ButtonClicked();
             default -> System.out.println("just click");
         }
     }
@@ -52,39 +58,55 @@ public class GameController implements Initializable {
 
     public void onMouseDragged(MouseEvent event) {
         gridPane.setCursor(Cursor.CLOSED_HAND);
-        MouseButton button = event.getButton();
-        if (button == MouseButton.MIDDLE) {
-            System.out.println(gridPane.getScaleZ());
-
-            gridPane.setScaleZ(gridPane.getScaleZ() + 10);
+        if (event.getButton() == MouseButton.MIDDLE) {
             gridPane.setTranslateX(gridInitialPosition.getKey() - (clickCoordinate.getKey() - event.getSceneX()));
             gridPane.setTranslateY(gridInitialPosition.getValue() - (clickCoordinate.getValue() - event.getSceneY()));
         }
     }
 
     private boolean isPlaying;
+    @FXML
     private int speed;
     private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    public void stopButtonClicked(ActionEvent event) {
+    @FXML
+    private ToggleButton stopButton;
+
+    @FXML
+    private ToggleButton x1Button;
+
+    @FXML
+    private ToggleButton x2Button;
+
+    @FXML
+    private ToggleButton x3Button;
+
+    public void stopButtonClicked() {
         isPlaying = !isPlaying;
+        if (isPlaying)
+            speed1ButtonClicked();
+        else
+            stopButton.setSelected(true);
     }
 
-    public void speed1ButtonClicker(ActionEvent actionEvent) throws InterruptedException {
+    public void speed1ButtonClicked() {
+        x1Button.setSelected(true);
         isPlaying = true;
         speed = 500;
         executorService.execute(gameRunnable);
     }
 
-    public void speed2ButtonClicker(ActionEvent actionEvent) throws InterruptedException {
+    public void speed2ButtonClicked() {
+        x2Button.setSelected(true);
         isPlaying = true;
         speed = 150;
         executorService.execute(gameRunnable);
     }
 
-    public void speed3ButtonClicker(ActionEvent actionEvent) throws InterruptedException {
+    public void speed3ButtonClicked() {
+        x3Button.setSelected(true);
         isPlaying = true;
-        speed = 1;
+        speed = 30;
         executorService.execute(gameRunnable);
     }
 
@@ -103,11 +125,15 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         game = Game.getInstance();
-        game.init(gridPane);
+        game.init(gridPane, size);
     }
 
     public static void shutdownExecutorService() {
         executorService.shutdownNow();
         System.out.println(executorService.isShutdown());
+    }
+
+    public static void setSize(GameSize size) {
+        GameController.size = size;
     }
 }

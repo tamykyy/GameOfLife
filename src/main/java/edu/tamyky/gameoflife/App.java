@@ -1,7 +1,6 @@
 package edu.tamyky.gameoflife;
 
 import edu.tamyky.gameoflife.controllers.GameController;
-import edu.tamyky.gameoflife.game.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,8 +15,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stage.setTitle("Conway's Game of Life");
-        stage.setMinWidth(460);
-        stage.setMinHeight(300);
+        stage.setMinWidth(560);
+        stage.setMinHeight(400);
 
         stage.setOnCloseRequest(event -> GameController.shutdownExecutorService());
 

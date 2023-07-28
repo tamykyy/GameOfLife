@@ -15,14 +15,11 @@ public class Game {
     private Game() {
     }
 
-    public void init(GridPane gridPane) {
-        int rows = 30;
-        int cols = 30;
+    public void init(GridPane gridPane, GameSize size) {
+        world = new Cell[size.getNumRows()][size.getNumCols()];
 
-        world = new Cell[rows][cols];
-
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
+        for (int row = 0; row < size.getNumRows(); row++) {
+            for (int col = 0; col < size.getNumCols(); col++) {
                 Rectangle rectangle = createRectangle();
                 world[row][col] = new Cell(rectangle);
                 gridPane.add(rectangle, col, row);

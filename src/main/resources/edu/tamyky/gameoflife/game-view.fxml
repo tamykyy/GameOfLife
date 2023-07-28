@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.tamyky.gameoflife.controllers.GameController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.tamyky.gameoflife.controllers.GameController">
     <children>
-        <StackPane id="root" fx:id="stackPane" focusTraversable="true" onKeyPressed="#onKeyPressed" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <StackPane id="root" focusTraversable="true" onKeyPressed="#onKeyPressed" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <GridPane fx:id="gridPane" onMouseClicked="#cellClicked">
                 </GridPane>

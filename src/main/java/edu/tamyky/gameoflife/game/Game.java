@@ -16,8 +16,8 @@ public class Game {
     }
 
     public void init(GridPane gridPane) {
-        int rows = 10;
-        int cols = 10;
+        int rows = 30;
+        int cols = 30;
 
         world = new Cell[rows][cols];
 

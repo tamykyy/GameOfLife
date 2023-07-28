@@ -1,5 +1,7 @@
 package edu.tamyky.gameoflife;
 
+import edu.tamyky.gameoflife.controllers.GameController;
+import edu.tamyky.gameoflife.game.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,6 +18,9 @@ public class App extends Application {
         stage.setTitle("Conway's Game of Life");
         stage.setMinWidth(460);
         stage.setMinHeight(300);
+
+        stage.setOnCloseRequest(event -> GameController.shutdownExecutorService());
+
         showScene(stage, "menu-view.fxml");
     }
 
